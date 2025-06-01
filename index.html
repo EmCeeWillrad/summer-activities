@@ -650,7 +650,7 @@
                         type: activity.type,
                         date: activity.date,
                         time: activity.time,
-                        duration: activity.duration,
+                        duration: Math.round(parseFloat(activity.duration) * 60), // Convert to minutes,
                         location: activity.location,
                         description: activity.description || '',
                         contact: activity.contact || ''
