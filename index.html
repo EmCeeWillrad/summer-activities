@@ -687,7 +687,7 @@
             const type = document.getElementById('activity-type').value;
             const date = document.getElementById('activity-date').value;
             const time = document.getElementById('activity-time').value;
-            const duration = document.getElementById('activity-duration').value;
+            const duration = Math.round(parseFloat(document.getElementById('activity-duration').value) * 60);
             const location = document.getElementById('activity-location').value;
             const description = document.getElementById('activity-description').value;
             const cost = document.getElementById('activity-cost').value;
