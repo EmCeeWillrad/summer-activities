@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   Vacation House Activity Manager
-  </title>
-  <style>
-   :root {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacation House Activity Manager</title>
+    <style>
+        :root {
             --primary: #0077cc;
             --secondary: #f8f9fa;
             --accent: #17a2b8;
@@ -352,12 +350,143 @@
                 max-width: 100%;
             }
         }
-  </style>
- </head>
- <body>
-  <header>
-   <div class="container">
-    <h1>
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Vacation House Activity Manager</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('activities')">Activities</div>
+            <div class="tab" onclick="switchTab('new-activity')">Add New Activity</div>
+            <div class="tab" onclick="switchTab('vermont-guide')">Vermont Guide</div>
+            <div class="tab" onclick="switchTab('data-management')">Data Management</div>
+        </div>
+
+        <div id="activities" class="tab-content active">
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="filter-type">Activity Type:</label>
+                    <select id="filter-type" onchange="filterActivities()">
+                        <option value="all">All Types</option>
+                        <option value="Golf">Golf</option>
+                        <option value="Hiking">Hiking</option>
+                        <option value="Swimming">Swimming</option>
+                        <option value="Fishing">Fishing</option>
+                        <option value="Boating">Boating</option>
+                        <option value="Jet Ski Time">Jet Ski Time</option>
+                        <option value="Tennis">Tennis</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Backyard Soccer">Backyard Soccer</option>
+                        <option value="Sightseeing">Sightseeing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-date">Date:</label>
+                    <input type="date" id="filter-date" onchange="filterActivities()">
+                </div>
+                <div class="filter-group">
+                    <label for="filter-status">Status:</label>
+                    <select id="filter-status" onchange="filterActivities()">
+                        <option value="all">All</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="active">Active</option>
+                        <option value="past">Past</option>
+                    </select>
+                </div>
+                <input type="text" id="search-input" class="search-bar" placeholder="Search..." oninput="filterActivities()">
+            </div>
+
+            <div id="activity-list" class="activity-grid">
+                <div class="no-activities">Loading activities...</div>
+            </div>
+        </div>
+
+        <div id="new-activity" class="tab-content">
+            <form id="activity-form" onsubmit="addActivity(event)">
+                <div class="form-group">
+                    <label for="activity-name">Activity Name*</label>
+                    <input type="text" id="activity-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-type">Activity Type*</label>
+                    <select id="activity-type" required>
+                        <option value="">Select Type</option>
+                        <option value="Golf">Golf</option>
+                        <option value="Hiking">Hiking</option>
+                        <option value="Swimming">Swimming</option>
+                        <option value="Fishing">Fishing</option>
+                        <option value="Boating">Boating</option>
+                        <option value="Jet Ski Time">Jet Ski Time</option>
+                        <option value="Tennis">Tennis</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Backyard Soccer">Backyard Soccer</option>
+                        <option value="Sightseeing">Sightseeing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-date">Date*</label>
+                    <input type="date" id="activity-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-time">Time*</label>
+                    <input type="time" id="activity-time" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-duration">Duration (hours)</label>
+                    <input type="number" id="activity-duration" min="0.5" step="0.5" value="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-location">Location*</label>
+                    <input type="text" id="activity-location" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="activity-description">Description</label>
+                    <textarea id="activity-description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-cost">Cost per Person ($)</label>
+                    <input type="number" id="activity-cost" min="0" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-limit">Participant Limit</label>
+                    <input type="number" id="activity-limit" min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-requirements">Requirements/What to Bring</label>
+                    <input type="text" id="activity-requirements">
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-contact">Contact Person</label>
+                    <input type="text" id="activity-contact">
+                </div>
+                
+                <div class="button-container">
+                    <button type="submit">Add Activity</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="vermont-guide" class="tab-content">
+             <h1>
      Vacation House Activity Manager
     </h1>
     <div class="tab-content" id="vermont-guide">
@@ -637,272 +766,36 @@
          Alchemist- Stowe, VT- one of the top breweries in the country
         </li>
        </ul>
-      </div>
-     </div>
+        </div>
+        
+        <div id="data-management" class="tab-content">
+            <h2>Data Management</h2>
+            
+            <div class="instructions">
+                <h3>Firebase Database Setup</h3>
+                <p>This app uses Firebase Firestore for real-time data sharing. All activities are shared between all users in real-time!</p>
+                <p><strong>Database Status:</strong> <span id="db-status">Connecting...</span></p>
+            </div>
+            
+            <div class="card">
+                <h3>Database Actions</h3>
+                <button onclick="loadActivities()">Refresh Activities</button>
+                <p>Click refresh to reload activities from the database.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Sample Activities</h3>
+                <p>Click the button below to add some sample activities to get started:</p>
+                <button onclick="addSampleActivities()">Add Sample Activities</button>
+            </div>
+        </div>
     </div>
-   </div>
-  </header>
-  <div class="container">
-   <div class="tabs">
-    <div class="tab active" onclick="switchTab('activities')">
-     Activities
-    </div>
-    <div class="tab" onclick="switchTab('new-activity')">
-     Add New Activity
-    </div>
-    <div class="tab" onclick="switchTab('data-management')">
-     Data Management
-    </div>
-    <div class="tab" onclick="switchTab('vermont-guide')">
-     Vermont Guest Guide
-    </div>
-   </div>
-   <div class="tab-content active" id="activities">
-    <div class="filters">
-     <div class="filter-group">
-      <label for="filter-type">
-       Activity Type:
-      </label>
-      <select id="filter-type" onchange="filterActivities()">
-       <option value="all">
-        All Types
-       </option>
-       <option value="Golf">
-        Golf
-       </option>
-       <option value="Hiking">
-        Hiking
-       </option>
-       <option value="Swimming">
-        Swimming
-       </option>
-       <option value="Fishing">
-        Fishing
-       </option>
-       <option value="Boating">
-        Boating
-       </option>
-       <option value="Jet Ski Time">
-        Jet Ski Time
-       </option>
-       <option value="Tennis">
-        Tennis
-       </option>
-       <option value="Lunch">
-        Lunch
-       </option>
-       <option value="Dinner">
-        Dinner
-       </option>
-       <option value="Backyard Soccer">
-        Backyard Soccer
-       </option>
-       <option value="Sightseeing">
-        Sightseeing
-       </option>
-       <option value="Other">
-        Other
-       </option>
-      </select>
-     </div>
-     <div class="filter-group">
-      <label for="filter-date">
-       Date:
-      </label>
-      <input id="filter-date" onchange="filterActivities()" type="date"/>
-     </div>
-     <div class="filter-group">
-      <label for="filter-status">
-       Status:
-      </label>
-      <select id="filter-status" onchange="filterActivities()">
-       <option value="all">
-        All
-       </option>
-       <option value="upcoming">
-        Upcoming
-       </option>
-       <option value="active">
-        Active
-       </option>
-       <option value="past">
-        Past
-       </option>
-      </select>
-     </div>
-     <input class="search-bar" id="search-input" oninput="filterActivities()" placeholder="Search..." type="text"/>
-    </div>
-    <div class="activity-grid" id="activity-list">
-     <div class="no-activities">
-      Loading activities...
-     </div>
-    </div>
-   </div>
-   <div class="tab-content" id="new-activity">
-    <form id="activity-form" onsubmit="addActivity(event)">
-     <div class="form-group">
-      <label for="activity-name">
-       Activity Name*
-      </label>
-      <input id="activity-name" required="" type="text"/>
-     </div>
-     <div class="form-group">
-      <label for="activity-type">
-       Activity Type*
-      </label>
-      <select id="activity-type" required="">
-       <option value="">
-        Select Type
-       </option>
-       <option value="Golf">
-        Golf
-       </option>
-       <option value="Hiking">
-        Hiking
-       </option>
-       <option value="Swimming">
-        Swimming
-       </option>
-       <option value="Fishing">
-        Fishing
-       </option>
-       <option value="Boating">
-        Boating
-       </option>
-       <option value="Jet Ski Time">
-        Jet Ski Time
-       </option>
-       <option value="Tennis">
-        Tennis
-       </option>
-       <option value="Lunch">
-        Lunch
-       </option>
-       <option value="Dinner">
-        Dinner
-       </option>
-       <option value="Backyard Soccer">
-        Backyard Soccer
-       </option>
-       <option value="Sightseeing">
-        Sightseeing
-       </option>
-       <option value="Other">
-        Other
-       </option>
-      </select>
-     </div>
-     <div class="form-group">
-      <label for="activity-date">
-       Date*
-      </label>
-      <input id="activity-date" required="" type="date"/>
-     </div>
-     <div class="form-group">
-      <label for="activity-time">
-       Time*
-      </label>
-      <input id="activity-time" required="" type="time"/>
-     </div>
-     <div class="form-group">
-      <label for="activity-duration">
-       Duration (hours)
-      </label>
-      <input id="activity-duration" min="0.5" step="0.5" type="number" value="1"/>
-     </div>
-     <div class="form-group">
-      <label for="activity-location">
-       Location*
-      </label>
-      <input id="activity-location" required="" type="text"/>
-     </div>
-     <div class="form-group full-width">
-      <label for="activity-description">
-       Description
-      </label>
-      <textarea id="activity-description"></textarea>
-     </div>
-     <div class="form-group">
-      <label for="activity-cost">
-       Cost per Person ($)
-      </label>
-      <input id="activity-cost" min="0" step="0.01" type="number"/>
-     </div>
-     <div class="form-group">
-      <label for="activity-limit">
-       Participant Limit
-      </label>
-      <input id="activity-limit" min="1" type="number"/>
-     </div>
-     <div class="form-group">
-      <label for="activity-requirements">
-       Requirements/What to Bring
-      </label>
-      <input id="activity-requirements" type="text"/>
-     </div>
-     <div class="form-group">
-      <label for="activity-contact">
-       Contact Person
-      </label>
-      <input id="activity-contact" type="text"/>
-     </div>
-     <div class="button-container">
-      <button type="submit">
-       Add Activity
-      </button>
-     </div>
-    </form>
-   </div>
-   <div class="tab-content" id="data-management">
-    <h2>
-     Data Management
-    </h2>
-    <div class="instructions">
-     <h3>
-      Firebase Database Setup
-     </h3>
-     <p>
-      This app uses Firebase Firestore for real-time data sharing. All activities are shared between all users in real-time!
-     </p>
-     <p>
-      <strong>
-       Database Status:
-      </strong>
-      <span id="db-status">
-       Connecting...
-      </span>
-     </p>
-    </div>
-    <div class="card">
-     <h3>
-      Database Actions
-     </h3>
-     <button onclick="loadActivities()">
-      Refresh Activities
-     </button>
-     <p>
-      Click refresh to reload activities from the database.
-     </p>
-    </div>
-    <div class="card">
-     <h3>
-      Sample Activities
-     </h3>
-     <p>
-      Click the button below to add some sample activities to get started:
-     </p>
-     <button onclick="addSampleActivities()">
-      Add Sample Activities
-     </button>
-    </div>
-   </div>
-  </div>
-  <div class="notification" id="notification">
-   Activity added successfully!
-  </div>
-  <!-- Firebase SDK -->
-  <script type="module">
-   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+
+    <div id="notification" class="notification">Activity added successfully!</div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         // Your Firebase config
@@ -978,9 +871,10 @@
         
         // Load activities on startup
         loadActivities();
-  </script>
-  <script>
-   // Power Automate webhook URL
+    </script>
+
+    <script>
+        // Power Automate webhook URL
         const POWER_AUTOMATE_URL = 'https://prod-03.westus.logic.azure.com:443/workflows/73293f2138194b768f0101384f904d66/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vRz_u9kCjy9Dk-a4zUjS1uTDv7Mf-jkOxmTf6bF208M';
         
         // Initialize data storage with Firebase
@@ -1008,7 +902,7 @@
                         type: activity.type,
                         date: activity.date,
                         time: activity.time,
-                        duration: activity.duration,
+                        duration: Math.round(parseFloat(activity.duration) * 60), // Convert to minutes,
                         location: activity.location,
                         description: activity.description || '',
                         contact: activity.contact || ''
@@ -1045,7 +939,7 @@
             const type = document.getElementById('activity-type').value;
             const date = document.getElementById('activity-date').value;
             const time = document.getElementById('activity-time').value;
-            const duration = document.getElementById('activity-duration').value;
+            const duration = Math.round(parseFloat(document.getElementById('activity-duration').value) * 60);
             const location = document.getElementById('activity-location').value;
             const description = document.getElementById('activity-description').value;
             const cost = document.getElementById('activity-cost').value;
@@ -1382,6 +1276,6 @@
                 alert('Error adding sample activities. Please try again.');
             }
         }
-  </script>
- </body>
+    </script>
+</body>
 </html>
